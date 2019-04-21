@@ -24,7 +24,7 @@ static GlyphDescs[] =
     { "exclamation", "&#33;" },
     { "dquote", "&#34;" },
     { "hash", "&#35;" },
-    { "currency sign", "&#164;" },
+    { "$", "$" },
     { "percent", "&#37;" },
     { "ampersand", "&#38;" },
     { "quote", "&#39;" },
@@ -115,11 +115,11 @@ static GlyphDescs[] =
     { "|", "|" },
     { "}", "}" },
     { "~", "~" },
-    { "slashed zero", "0&#x0338;" },
-    { nullptr, "&lt;" },
-    { nullptr, "=" },
-    { nullptr, "&gt;" },
-    { nullptr, "?" },
+    { "O with stroke", "&#216;" },
+    { "o with stroke", "&#248;" },
+    { "yo cyrillic", "&#x0451;" },
+    { "Yo cyrillic", "&#x0401;" },  //TODO: dots
+    { "Hard sign cyrillic", "&#x042A;" },
     { "yu cyrillic", "&#x044E;" },
     { "a cyrillic", "&#x0430;" },
     { "be cyrillic", "&#x0431;" },
@@ -183,16 +183,11 @@ static GlyphDescs[] =
     { "E cyrillic", "&#x042D;" },
     { "Shcha cyrillic", "&#x0429;" },
     { "Che cyrillic", "&#x0427;" },
-    { nullptr, "!" },  // 195
-    { nullptr, "&#34;" },  // 196
-    { nullptr, "#" },  // 197
-    { nullptr, "&#164;" },  // 198
-    { nullptr, "&#37;" },  // 199
-    { nullptr, "&#38;" },  // 200
-    { nullptr, "&#39;" },  // 201
-    { nullptr, "&#40;" },  // 202
-    { nullptr, "&#41;" },  // 203
-    { nullptr, "&#42;" },  // 204
+    { "pound sign", "&#163;" },
+    { "currency sign", "&#164;" },
+    { "yen sign", "&#165;" },
+    { "AElig", "&#198;" },
+    { "aelig", "&#230;" },
 };
 
 int main(int argc, char* argv[])
@@ -220,14 +215,16 @@ int main(int argc, char* argv[])
 
     m_output << "<font-face font-family=\"Robotron Dot Matrix\" font-weight=\"normal\" font-style=\"normal\" "
         << "units-per-em=\"" << fontUnitsPerEm << "\" cap-height=\"" << fontCapHeight << "\" "
-        << "x-height=\"" << fontXHeight << "\" ascent=\"" << fontAscent << "\" descent=\"" << fontDescent << "\""
-        << ">" << std::endl;
+        << "x-height=\"" << fontXHeight << "\" ascent=\"" << fontAscent << "\" descent=\"" << fontDescent << "\" "
+        << "widths=\"" << fontUnitsPerEm << "\">" << std::endl;
     m_output << "<font-face-src><font-face-name name=\"Robotron Dot Matrix PICA\"/></font-face-src>" << std::endl;
     m_output << "</font-face>" << std::endl;
 
     m_output << "<missing-glyph><path d=\"M0,0h200v200h-200z\"/></missing-glyph>" << std::endl;
 
-    for (int symbol = 0; symbol < sizeof(GlyphDescs) / sizeof(GlyphDescStruct); symbol++)
+    m_output << "<glyph glyph-name=\"space\" unicode=\" \" horiz-adv-x=\"" << fontHorizAdvX << "\"/>" << std::endl;
+
+    for (int symbol = 1; symbol < sizeof(GlyphDescs) / sizeof(GlyphDescStruct); symbol++)
     {
         const GlyphDescStruct* pGlyph = GlyphDescs + symbol;
         const unsigned short* pchardata = RobotronFont + symbol * 9;
