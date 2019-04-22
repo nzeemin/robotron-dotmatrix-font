@@ -1,9 +1,22 @@
-# robotron-dotmatrix-font - Robotron dot matrix font restored from the printer ROM
+# robotron-dotmatrix-font - Robotron dot matrix printer font
 
-The font contains 185 glyphs:
+The font characters was restored from the real Robotron 9-pin printer ROMs.
+Most of the symbols are from Robotron СМ6329.01М printer ROM (ASCII and Cyrillic).
+Some symbols are from Robotron K6313 printer ROM (Latin1 symbols).
+
+Currently the font contains 185 glyphs:
  - ASCII
- - Cyrillic letters (but Ё without dots)
+ - Cyrillic letters (but capital Ё has no dots)
  - some Latin1 symbols
+
+I used a simple C++ program to decode symbols, and another program (see RobotronFontGen folder) to produce an SVG font. Online converter used to convert the SVG font to WOFF.
+So the result files are:
+ - robotronfont.svg
+ - robotronfont.woff
+
+The license for both the font and the source code is [PUBLIC DOMAIN](https://creativecommons.org/publicdomain/mark/1.0/).
 
 ![](https://github.com/nzeemin/robotron-dotmatrix-font/blob/master/test-woff.png)
 
+### See Also
+* [ESCParser](https://github.com/nzeemin/ukncbtl-utils/wiki/ESCParser) — ESC/P parser/interpreter with PostScript/SVG/PDF output.

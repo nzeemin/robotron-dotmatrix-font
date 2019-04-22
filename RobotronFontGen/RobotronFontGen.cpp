@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
 {
     std::cerr << "RobotronFontGen utility  by Nikita Zimin  " << __DATE__ << " " << __TIME__ << std::endl;
 
-    std::ofstream m_output("..\\robotronfont.svg");
+    std::ofstream output("..\\robotronfont.svg");
 
     float scale = 10.0f;
     float fontHorizAdvX = 72 * scale;  // The default horizontal advance after rendering a glyph in horizontal orientation
@@ -225,21 +225,21 @@ int main(int argc, char* argv[])
     float ystep = 12.0f * scale;
     float r = 6.0f * scale;
 
-    m_output << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << std::endl;
-    m_output << "<defs>" << std::endl;
+    output << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << std::endl;
+    output << "<defs>" << std::endl;
 
-    m_output << "<font id=\"RobotronFont\" horiz-adv-x=\"" << fontHorizAdvX << "\">" << std::endl;
+    output << "<font id=\"RobotronFont\" horiz-adv-x=\"" << fontHorizAdvX << "\">" << std::endl;
 
-    m_output << "<font-face font-family=\"Robotron Dot Matrix\" font-weight=\"normal\" font-style=\"normal\" " << std::endl
+    output << "<font-face font-family=\"Robotron Dot Matrix\" font-weight=\"normal\" font-style=\"normal\" " << std::endl
         << "    units-per-em=\"" << fontUnitsPerEm << "\" cap-height=\"" << fontCapHeight << "\" "
         << "x-height=\"" << fontXHeight << "\" ascent=\"" << fontAscent << "\" descent=\"" << fontDescent << "\" "
         << "widths=\"" << fontUnitsPerEm << "\">" << std::endl;
-    m_output << "<font-face-src><font-face-name name=\"Robotron Dot Matrix PICA\"/></font-face-src>" << std::endl;
-    m_output << "</font-face>" << std::endl;
+    output << "<font-face-src><font-face-name name=\"Robotron Dot Matrix PICA\"/></font-face-src>" << std::endl;
+    output << "</font-face>" << std::endl;
 
-    m_output << "<missing-glyph><path d=\"M0,0h200v200h-200z\"/></missing-glyph>" << std::endl;
+    output << "<missing-glyph><path d=\"M0,0h200v200h-200z\"/></missing-glyph>" << std::endl;
 
-    m_output << "<glyph glyph-name=\"space\" unicode=\" \" horiz-adv-x=\"" << fontHorizAdvX << "\"/>" << std::endl;
+    output << "<glyph glyph-name=\"space\" unicode=\" \" horiz-adv-x=\"" << fontHorizAdvX << "\"/>" << std::endl;
 
     int glyphcount = 1;
     for (int symbol = 1; symbol < sizeof(GlyphDescs) / sizeof(GlyphDescStruct); symbol++)
@@ -251,8 +251,8 @@ int main(int argc, char* argv[])
 
         float y = 7 * 12 * scale;
 
-        m_output << "<glyph glyph-name=\"" << pGlyph->name << "\" unicode=\"" << pGlyph->unicode << "\" ";
-        m_output << "d=\"";
+        output << "<glyph glyph-name=\"" << pGlyph->name << "\" unicode=\"" << pGlyph->unicode << "\" ";
+        output << "d=\"";
         for (int line = 0; line < 9; line++)
         {
             unsigned short data = pchardata[line];
@@ -262,30 +262,24 @@ int main(int argc, char* argv[])
                 unsigned short bit = (data >> col) & 1;
                 if (!bit) continue;
 
-                m_output << "M" << x - r << "," << y << " ";
-                m_output << "a " << r << "," << r << " 0 0 0 " << r << "," << r << " ";
-                m_output << "a " << r << "," << r << " 0 1 0 " << -r << "," << -r << " ";
-                m_output << "z ";
+                output << "M" << x - r << "," << y << " ";
+                output << "a " << r << "," << r << " 0 0 0 " << r << "," << r << " ";
+                output << "a " << r << "," << r << " 0 1 0 " << -r << "," << -r << " ";
+                output << "z ";
             }
             y -= ystep;
         }
-        m_output << "\"/>" << std::endl;
+        output << "\"/>" << std::endl;
         glyphcount++;
     }
 
-    m_output << "</font>" << std::endl;
+    output << "</font>" << std::endl;
 
-    m_output << "</defs>" << std::endl;
+    output << "</defs>" << std::endl;
 
-    //m_output << "<text x=\"100\" y=\"100\" style=\"font-family: 'Robotron Dot Matrix'; font-weight: normal; font-style: normal\">" << std::endl;
-    //m_output << "0123456789" << std::endl;
-    //m_output << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << std::endl;
-    //m_output << "abcdefghijklmnopqrstuvwxyz" << std::endl;
-    //m_output << "</text>" << std::endl;
+    output << "</svg>" << std::endl;
 
-    m_output << "</svg>" << std::endl;
-
-    m_output.close();
+    output.close();
 
     std::cerr << "Total glyph count: " << glyphcount << std::endl;
 
