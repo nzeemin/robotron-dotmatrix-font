@@ -217,25 +217,28 @@ static GlyphDescs[] =
     { "pi", "&#960;" },
 };
 
-int main(int argc, char* argv[])
+void PrepareSvgFont(const char * filename, const char * fontfacesuffix, int shiftx)
 {
-    std::cerr << "RobotronFontGen utility  by Nikita Zimin  " << __DATE__ << " " << __TIME__ << std::endl;
+    std::cerr << "Preparing font " << filename << std::endl;
+    std::ofstream output(filename);
 
-    std::ofstream output("..\\robotronfont.svg");
-
-    float scale = 10.0f;
-    float fontHorizAdvX = 72 * scale;  // The default horizontal advance after rendering a glyph in horizontal orientation
+    const float scale = 10.0f;
+    float fontHorizAdvX = shiftx * scale;  // The default horizontal advance after rendering a glyph in horizontal orientation
     float fontUnitsPerEm = 9 * 12 * scale;
     float fontCapHeight = 7 * 12 * scale;  // Height of uppercase glyphs
     float fontXHeight = 5 * 12 * scale;  // Height of lowercase glyphs
     float fontAscent = 7 * 12 * scale;  // Maximum unaccented height
     float fontDescent = 2 * 12 * scale;  // Maximum unaccented depth
 
-    float xstep = (float(720 / 10) / 11.0f) * scale;
+    float xstep = (float(shiftx) / 11.0f) * scale;
     float ystep = 12.0f * scale;
-    float r = 6.0f * scale;
+    float r = 6.0f * scale;  // dot radius
 
     output << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << std::endl;
+    output << "<metadata>" << std::endl
+        << "Created using RobotronFontGen utility by Nikita Zimin" << std::endl
+        << "https://github.com/nzeemin/robotron-dotmatrix-font" << std::endl
+        << "</metadata>" << std::endl;
     output << "<defs>" << std::endl;
 
     output << "<font id=\"RobotronFont\" horiz-adv-x=\"" << fontHorizAdvX << "\">" << std::endl;
@@ -244,7 +247,7 @@ int main(int argc, char* argv[])
         << "    units-per-em=\"" << fontUnitsPerEm << "\" cap-height=\"" << fontCapHeight << "\" "
         << "x-height=\"" << fontXHeight << "\" ascent=\"" << fontAscent << "\" descent=\"" << fontDescent << "\" "
         << "widths=\"" << fontUnitsPerEm << "\">" << std::endl;
-    output << "<font-face-src><font-face-name name=\"Robotron Dot Matrix PICA\"/></font-face-src>" << std::endl;
+    output << "<font-face-src><font-face-name name=\"Robotron Dot Matrix "<< fontfacesuffix << "\"/></font-face-src>" << std::endl;
     output << "</font-face>" << std::endl;
 
     output << "<missing-glyph><path d=\"M0,0h200v200h-200z\"/></missing-glyph>" << std::endl;
@@ -292,8 +295,15 @@ int main(int argc, char* argv[])
     output.close();
 
     std::cerr << "Total glyph count: " << glyphcount << std::endl;
+}
 
-    return 0;
+int main(int argc, char* argv[])
+{
+    std::cerr << "RobotronFontGen utility  by Nikita Zimin  " << __DATE__ << " " << __TIME__ << std::endl;
+
+    PrepareSvgFont("..\\robotronfontpica.svg", "PICA", 720 / 10);
+
+    PrepareSvgFont("..\\robotronfontelit.svg", "ELITE", 720 / 12);
 }
 
 

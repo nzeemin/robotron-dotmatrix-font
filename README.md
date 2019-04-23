@@ -11,8 +11,8 @@ Currently the font contains 193 glyphs:
 
 I used a simple C++ program to decode symbols, and another program (see RobotronFontGen folder) to produce an SVG font. Online converter used to convert the SVG font to WOFF.
 So the result files are:
- - robotronfont.svg
- - robotronfont.woff
+ - robotronfontelit.svg, robotronfontelit.woff - ELITE font face
+ - robotronfontpica.svg, robotronfontpica.woff - PICA font face
 
 The license for both the font and the source code is [PUBLIC DOMAIN](https://creativecommons.org/publicdomain/mark/1.0/).
 
