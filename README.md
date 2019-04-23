@@ -4,9 +4,9 @@ The font characters was restored from the real Robotron 9-pin printer ROMs.
 Most of the symbols are from Robotron СМ6329.01М printer ROM (ASCII and Cyrillic).
 Some symbols are from Robotron K6313 printer ROM (Latin1 symbols).
 
-Currently the font contains 185 glyphs:
+Currently the font contains 193 glyphs:
  - ASCII
- - Cyrillic letters (but capital Ё has no dots)
+ - Cyrillic letters to cover Russian alphabet (but capital Ё has no dots)
  - some Latin1 symbols
 
 I used a simple C++ program to decode symbols, and another program (see RobotronFontGen folder) to produce an SVG font. Online converter used to convert the SVG font to WOFF.
