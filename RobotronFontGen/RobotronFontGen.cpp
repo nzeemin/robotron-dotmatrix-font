@@ -84,7 +84,7 @@ static GlyphDescs[] =
     { "]", "]" },
     { "^", "^" },
     { "_", "_" },
-    { "grave accent", "&#140;" },
+    { "grave accent", "&#96;" },
     { "a", "a" },
     { "b", "b" },
     { "c", "c" },
@@ -183,19 +183,29 @@ static GlyphDescs[] =
     { "E cyrillic", "&#x042D;" },
     { "Shcha cyrillic", "&#x0429;" },
     { "Che cyrillic", "&#x0427;" },
+    { "inverted !", "&#161;" },
     { "pound sign", "&#163;" },
     { "currency sign", "&#164;" },
     { "yen sign", "&#165;" },
     { "broken bar", "&#166;" },
     { "section", "&#167;" },
+    { "left guillemet", "&#171;" },
+    { "macron", "&#175;" },
+    { "degree", "&#176;" },
+    { "plus-minus", "&#177;" },
+    { "acute accent", "&#180;" },
+    { "interpunkt", "&#183;" },
+    { "right guillemet", "&#187;" },
     { "inverted ?", "&#191;" },
     { "A-umlaut", "&#196;" },
     { "A-ring", "&#197;" },
     { "AElig", "&#198;" },
     { "N-tilde", "&#209;" },
     { "O-umlaut", "&#214;" },
+    { "multiplication", "&#215;" },
     { "O with stroke", "&#216;" },
     { "U-umlaut", "&#220;" },
+    { "&#223;", "&#223;" },
     { "a-grave", "&#224;" },
     { "a-acute", "&#225;" },
     { "a-umlaut", "&#228;" },
@@ -205,19 +215,33 @@ static GlyphDescs[] =
     { "e-umlaut", "&#235;" },
     { "i-grave", "&#236;" },
     { "i-acute", "&#237;" },
+    { "i-cup", "&#238;" },
+    { "i-umlaut", "&#239;" },
     { "n-tilde", "&#241;" },
     { "o-grave", "&#242;" },
     { "o-acute", "&#243;" },
     { "o-umlaut", "&#246;" },
+    { "obelus", "&#247;" },
     { "o with stroke", "&#248;" },
     { "u-grave", "&#249;" },
     { "u-acute", "&#250;" },
+    { "u-cap", "&#251;" },
     { "u-umlaut", "&#252;" },
+    { "y-acute", "&#253;" },
+    { "y-umlaut", "&#255;" },
     { "Sum", "&#x2211;" },
     { "pi", "&#960;" },
 };
 
-void PrepareSvgFont(const char * filename, const char * fontfacesuffix, int shiftx)
+void DrawStrike(std::ofstream & output, float x, float y, float r)
+{
+    output << "M" << x - r << "," << y << " ";
+    output << "a" << r << "," << r << " 0 0 0 " << r << "," << r << " ";
+    output << "a" << r << "," << r << " 0 1 0 " << -r << "," << -r << " ";
+    output << "z ";
+}
+
+void PrepareSvgFont(const char * filename, const char * fontfacesuffix, int shiftx, bool fontsp)
 {
     std::cerr << "Preparing font " << filename << std::endl;
     std::ofstream output(filename);
@@ -275,10 +299,9 @@ void PrepareSvgFont(const char * filename, const char * fontfacesuffix, int shif
                 unsigned short bit = (data >> col) & 1;
                 if (!bit) continue;
 
-                output << "M" << x - r << "," << y << " ";
-                output << "a " << r << "," << r << " 0 0 0 " << r << "," << r << " ";
-                output << "a " << r << "," << r << " 0 1 0 " << -r << "," << -r << " ";
-                output << "z ";
+                DrawStrike(output, x, y, r);
+                if (fontsp)
+                    DrawStrike(output, x + xstep, y, r);
             }
             y -= ystep;
         }
@@ -301,9 +324,11 @@ int main(int argc, char* argv[])
 {
     std::cerr << "RobotronFontGen utility  by Nikita Zimin  " << __DATE__ << " " << __TIME__ << std::endl;
 
-    PrepareSvgFont("..\\robotronfontpica.svg", "PICA", 720 / 10);
+    PrepareSvgFont("..\\robotronfontpica.svg", "PICA", 720 / 10, false);
 
-    PrepareSvgFont("..\\robotronfontelit.svg", "ELITE", 720 / 12);
+    PrepareSvgFont("..\\robotronfontelit.svg", "ELITE", 720 / 12, false);
+
+    PrepareSvgFont("..\\robotronfontsper.svg", "SPER", 720 / 5, true);
 }
 
 
