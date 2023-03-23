@@ -6,7 +6,7 @@ Some symbols are from Robotron K6313 printer ROM (Latin1 symbols).
 
 Currently the font contains 291 glyphs:
  - ASCII
- - Cyrillic letters to cover Russian alphabet (but capital Ё has no dots)
+ - Cyrillic letters to cover Russian alphabet
  - most Latin1 symbols
  - some of windows-1252 0x80..0x9F
 

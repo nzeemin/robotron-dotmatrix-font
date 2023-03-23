@@ -119,7 +119,7 @@ static GlyphDescs[] =
     { nullptr, "" },  // 128
     { "ie cyrillic", "&#x0450;" },
     { "yo cyrillic", "&#x0451;" },
-    { "Yo cyrillic", "&#x0401;" },  //TODO: dots
+    { "Yo cyrillic", "&#x0401;" },
     { "Hard sign cyrillic", "&#x042A;" },
     { "yu cyrillic", "&#x044E;" },
     { "a cyrillic", "&#x0430;" },
